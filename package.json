@@ -18,10 +18,10 @@
     "url": "https://github.com/Nngozii/fintech-wallet-service/issues"
   },
   "homepage": "https://github.com/Nngozii/fintech-wallet-service#readme",
-
   "dependencies": {
     "dotenv": "^17.2.3",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"

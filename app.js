@@ -1,5 +1,8 @@
 const express = require("express");
 require("dotenv").config();
+
+const db = require("./database/main")
+
 const app = express();
 
 port = process.env.PORT;
