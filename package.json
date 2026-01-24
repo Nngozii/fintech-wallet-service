@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "name": "fintech-wallet-service",
+  "version": "1.0.0",
+  "description": "A backend service that handles wallet operations such as deposits, withdrawals, and peer-to-peer transfers with strong data consistency guarantees.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nngozii/fintech-wallet-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nngozii/fintech-wallet-service/issues"
+  },
+  "homepage": "https://github.com/Nngozii/fintech-wallet-service#readme"
+}
