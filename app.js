@@ -2,8 +2,13 @@ const express = require("express");
 require("dotenv").config();
 
 const db = require("./database/main")
+const authRoute = require("./routes/auth.route")
 
 const app = express();
+
+app.use((req, res, next) => {
+  res.status(200).send("Banking Home")
+})
 
 port = process.env.PORT;
 
