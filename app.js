@@ -1,16 +1,27 @@
 const express = require("express");
 require("dotenv").config();
 
-const db = require("./database/main")
-const authRoute = require("./routes/auth.route")
+const db = require("./database/main");
+const authRoute = require("./routes/auth.route");
 
 const app = express();
 
-app.use("/api", authRoute)
+app.use("/api", authRoute);
 
 app.use((req, res, next) => {
-  res.status(200).send("Banking Home")
-})
+  res.status(200).send("Banking Home");
+});
+
+app.use((err, req, res, next) => {
+  let statusCode = err.statusCode || 500
+  let message = err.message || "Internal Server Error"
+  return res.status(statusCode).json({
+    success: false,
+    "status code": statusCode,
+    message: message 
+  })
+  next();
+});
 
 port = process.env.PORT;
 
