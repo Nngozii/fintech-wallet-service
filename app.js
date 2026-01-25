@@ -6,6 +6,8 @@ const authRoute = require("./routes/auth.route")
 
 const app = express();
 
+app.use("/api", authRoute)
+
 app.use((req, res, next) => {
   res.status(200).send("Banking Home")
 })
