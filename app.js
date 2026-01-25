@@ -8,8 +8,8 @@ const app = express();
 
 app.use("/api", authRoute);
 
-app.use((req, res, next) => {
-  res.status(200).send("Banking Home");
+app.use("/", (req, res, next) => {
+  res.status(200).send("Banking Home. Please Sign up or Log in");
 });
 
 app.use((err, req, res, next) => {
