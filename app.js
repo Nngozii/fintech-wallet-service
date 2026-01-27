@@ -37,7 +37,6 @@ app.use((err, req, res, next) => {
     "status code": statusCode,
     message: message,
   });
-  next();
 });
 
 port = process.env.PORT;
