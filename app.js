@@ -15,6 +15,20 @@ app.use("/", (req, res, next) => {
   res.status(200).send("Banking Home. Please Sign up or Log in");
 });
 
+//Middleware to handle Joi validation error
+app.use(((err, req, res, next) => {
+  if (err && err.error && err.error.isJoi) {
+    // we had a joi error, let's return a custom 400 json response
+    res.status(400).json({
+      type: err.type, // will be "query" here, but could be "headers", "body", or "params"
+      message: err.error.toString()
+    });
+  } else {
+    // pass on to another error handler
+    next(err);
+     }
+}))
+
 app.use((err, req, res, next) => {
   let statusCode = err.statusCode || 500;
   let message = err.message || "Internal Server Error";
