@@ -23,7 +23,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "express-joi-validation": "^6.1.0",
-    "joi": "^18.0.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5"
   },
   "devDependencies": {
