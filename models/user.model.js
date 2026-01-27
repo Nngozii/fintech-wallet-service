@@ -19,6 +19,12 @@ const userModel = new Schema(
       enum: ["active", "suspended"],
       default: "active",
     },
+    walletId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Wallet",
+      required: true,
+      unique: true,
+    }
   },
   { timestamps: true },
 );
