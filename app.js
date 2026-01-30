@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
     success: false,
     "status code": statusCode,
     message: message,
-    stack: err.stack
+    stack: stack
   });
 });
 
