@@ -32,7 +32,7 @@ exports.signUp = async (req, res, next) => {
       message: "User Created Successfully",
     });
   } catch (err) {
-    res.send(err);
+    next(errorHandler(500, err))
   }
 };
 
