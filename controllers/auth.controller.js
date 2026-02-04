@@ -24,7 +24,7 @@ exports.signUp = async (req, res, next) => {
       balance: 0,
     });
     user.walletId = wallet._id
-    await user.save(wallet._id);
+    await user.save();
     await wallet.save();
     res.status(200).json({
       success: true,
