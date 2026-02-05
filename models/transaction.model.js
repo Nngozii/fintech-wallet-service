@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const transactionModel = new Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      unique: true
+    },
     transactionType: {
       type: String,
       enum: ["transfer", "withdraw", "fund"],
@@ -17,7 +22,6 @@ const transactionModel = new Schema(
     sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
       unique: true,
     },
     recipient: {
@@ -25,6 +29,14 @@ const transactionModel = new Schema(
       ref: "User",
       required: true,
       unique: true,
+    },
+    balanceBefore: {
+      type: Number,
+      required: true
+    },
+    balanceAfter: {
+      type: Number,
+      required: true
     },
     status: {
       type: String,
