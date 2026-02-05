@@ -7,7 +7,6 @@ const transactionModel = new Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      unique: true
     },
     transactionType: {
       type: String,
