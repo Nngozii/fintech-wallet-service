@@ -22,13 +22,11 @@ const transactionModel = new Schema(
     sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      unique: true,
     },
     recipient: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true,
     },
     balanceBefore: {
       type: Number,
