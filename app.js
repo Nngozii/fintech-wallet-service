@@ -1,12 +1,25 @@
 const express = require("express");
 require("dotenv").config();
 const helmet = require("helmet")
+const rateLimit = require("express-rate-limit")
 
 const db = require("./database/main");
 const authRoute = require("./routes/auth.route");
 const transactionRoute = require("./routes/transaction.route")
 
 const app = express();
+
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit: 50, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+  message: "We have received too many request. Please try again after 15 mins", // Message to display after limit reached
+	standardHeaders: 'draft-8', // draft-6: `RateLimit-*` headers; draft-7 & draft-8: combined `RateLimit` header
+	legacyHeaders: false, // Disable the `X-RateLimit-*` headers.
+	ipv6Subnet: 56, // Set to 60 or 64 to be less aggressive, or 52 or 48 to be more aggressive
+})
+
+// Apply the rate limiting middleware to all requests.
+app.use("/api", limiter)
 
 app.use(helmet())
 app.use(express.json());
