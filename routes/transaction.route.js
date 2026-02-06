@@ -20,6 +20,6 @@ const router = express.Router();
 
 router.post("/deposit", verifyToken, validator.body(depositSchema), deposit);
 router.post("/withdraw", validator.body(withdrawSchema), withdraw);
-router.post("/transfer", validator.body(transferSchema), transfer);
+router.post("/transfer", verifyToken, validator.body(transferSchema), transfer);
 
 module.exports = router;
