@@ -19,7 +19,7 @@ const validator = require("express-joi-validation").createValidator({
 const router = express.Router();
 
 router.post("/deposit", verifyToken, validator.body(depositSchema), deposit);
-router.post("/withdraw", validator.body(withdrawSchema), withdraw);
+router.post("/withdraw", verifyToken, validator.body(withdrawSchema), withdraw);
 router.post("/transfer", verifyToken, validator.body(transferSchema), transfer);
 
 module.exports = router;

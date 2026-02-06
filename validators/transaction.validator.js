@@ -9,4 +9,6 @@ exports.transferSchema = Joi.object({
   recipient: Joi.string().required()
 });
 
-exports.withdrawSchema = Joi.object({});
+exports.withdrawSchema = Joi.object({
+  amount: Joi.number().positive().precision(2).min(50).required()
+});

@@ -85,8 +85,8 @@ exports.transfer = async (req, res, next) => {
       if (recipientWallet.status !== "active") {
         throw new Error("Recipient wallet is not active");
       }
-      if(wallet._id.equals(recipientWallet._id)){
-        throw new Error("You cannot transfer to same wallet")
+      if (wallet._id.equals(recipientWallet._id)) {
+        throw new Error("You cannot transfer to same wallet");
       }
       if (wallet.balance < amount) {
         throw new Error("Insufficient fund");
@@ -131,4 +131,56 @@ exports.transfer = async (req, res, next) => {
   }
 };
 
-exports.withdraw = (req, res, next) => {};
+exports.withdraw = async (req, res, next) => {
+  const { amount } = req.body;
+  //Start MongoDB session for atomic update
+  const session = await mongoose.startSession();
+
+  try {
+    await session.withTransaction(async () => {
+       //Read wallet within session to maintain transactional consistency and prevent stale reads
+      const wallet = await Wallet.findById(req.user.walletID).session(session);
+
+      if (!wallet) {
+        throw new Error("Wallet not found");
+      }
+      //Prevent transaction on frozen wallets
+      if (wallet.status !== "active") {
+        throw new Error("Wallet is not active");
+      }
+      if(wallet.balance < amount){
+        throw new Error("Insufficient fund")
+      }
+      //Record balance before transaction
+      let balanceBefore = wallet.balance;
+
+      //Ledger entry for audit trails
+      let transaction = new Transaction({
+        userId: req.user.sub,
+        transactionType: "withdraw",
+        amount,
+        recipient: wallet._id,
+        balanceBefore,
+        status: "pending",
+        timestamp: new Date(),
+      });
+
+      //Atomic balance update
+      wallet.balance -= amount;
+      await wallet.save({ session });
+      //Balance after transaction
+      transaction.balanceAfter = wallet.balance;
+
+      transaction.status = "successful";
+      await transaction.save({ session });
+    })
+    return res.status(200).send(`Successful withdrawal of ${amount}`);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+    });
+  } finally {
+    await session.endSession();
+    console.log("session ended");
+  }
+};
