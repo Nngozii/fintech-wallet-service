@@ -6,6 +6,7 @@ const rateLimit = require("express-rate-limit")
 const db = require("./database/main");
 const authRoute = require("./routes/auth.route");
 const transactionRoute = require("./routes/transaction.route")
+const walletRoute = require("./routes/wallet.route");
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(helmet())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/", walletRoute)
 app.use("/api", transactionRoute)
 app.use("/api", authRoute);
 
