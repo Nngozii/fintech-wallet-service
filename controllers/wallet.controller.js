@@ -9,7 +9,7 @@ const Transaction = require("../models/transaction.model");
 exports.getWallet = async (req, res, next) => {
   const userId = req.user.sub;
   const wallet = await Wallet.findById(req.user.walletID);
-  const transactions = await Transaction.find({ userId });
+  const transactions = await Transaction.find({ userId }).sort({createdAt: 1 });
 
   if (!wallet) {
   return res.status(404).json({
